@@ -6,11 +6,10 @@ RUN apt-get update && apt-get install -y \
         curl &&                          \
     apt-get clean &&                     \
     rm -rf /var/lib/apt/
-RUN curl -JLo radarr.tar.gz                                                                          \
-        'http://radarr.servarr.com/v1/update/master/updatefile?os=linux&runtime=netcore&arch=x64' && \
-    tar -xf radarr.tar.gz &&                                                                         \
-    mv Radarr/ /app/ &&                                                                              \
-    rm radarr.tar.gz
+RUN curl -JL                                                                                        \
+        'http://radarr.servarr.com/v1/update/master/updatefile?os=linux&runtime=netcore&arch=x64' | \
+    tar -xz &&                                                                                      \
+    mv Radarr/ /app/
 
 FROM base
 WORKDIR /app/
