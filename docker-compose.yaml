@@ -1,0 +1,39 @@
+---
+version: "3.7"
+
+services:
+  install_site:
+    build: install_site/
+    ports:
+      - "80:80"
+    environment:
+      - BASE_URL=$BASE_URL
+      - EMAIL=$EMAIL
+    volumes:
+      - ./nginx.conf:/web/radarr.conf
+      - sites-availables:/sites-availables
+      - certs:/etc/letsencrypt
+
+  radarr:
+    build: radarr/
+    restart: always
+    volumes:
+      - /media/:/data/
+      - config:/config/
+    env_file:
+      - .env
+    networks:
+      - default
+        - selfhost
+
+volumes:
+  config:
+  sites-availables:
+    external: true
+  certs:
+    external: true
+
+networks:
+  default:
+  selfhost:
+    external: true
