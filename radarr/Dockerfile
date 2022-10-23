@@ -24,5 +24,6 @@ RUN ls
 COPY docker-entrypoint.sh /usr/local/bin/
 VOLUME /data/ /config/
 RUN useradd -m app
+EXPOSE 7878
 ENTRYPOINT ["docker-entrypoint.sh"]
 CMD ["./Radarr", "--nobrowser", "--data=/config"]
