@@ -1,11 +1,11 @@
-FROM debian as base
+FROM debian:11 as base
 ENV DEBIAN_FRONTEND=noninteractive
-
-FROM base as build
 RUN apt-get update && apt-get install -y \
         curl &&                          \
     apt-get clean &&                     \
     rm -rf /var/lib/apt/
+
+FROM base as build
 RUN curl -JL                                                                                        \
         'http://radarr.servarr.com/v1/update/master/updatefile?os=linux&runtime=netcore&arch=x64' | \
     tar -xz &&                                                                                      \
@@ -14,7 +14,6 @@ RUN curl -JL                                                                    
 FROM base
 WORKDIR /app/
 RUN apt-get update && apt-get install -y \
-        curl                             \
         libicu67                         \
         sqlite3 &&                       \
     apt-get clean &&                     \
