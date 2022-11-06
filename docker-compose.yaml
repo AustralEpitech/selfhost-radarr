@@ -16,7 +16,7 @@ services:
 
   radarr:
     build: radarr
-    restart: always
+    restart: unless_stopped
     volumes:
       - config:/config/
       - $MEDIA_PATH/:/data/
